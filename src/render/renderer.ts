@@ -27,5 +27,15 @@
  */
 
 import './index.css';
+import { ipcRenderer } from 'electron';
 
-console.log('👋 This message is being logged by "renderer.js", included via webpack');
+console.log(
+  '👋 This message is being logged by "renderer.js", included via webpack'
+);
+
+(window as any).DEBUG = {
+  showDB() {
+    const db = ipcRenderer.sendSync('getDB');
+    console.log(db);
+  },
+};

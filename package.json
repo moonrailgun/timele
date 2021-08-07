@@ -1,6 +1,6 @@
 {
-  "name": "my-new-app",
-  "productName": "my-new-app",
+  "name": "timele",
+  "productName": "timele",
   "version": "1.0.0",
   "description": "My Electron application description",
   "main": ".webpack/main",
@@ -24,7 +24,7 @@
         {
           "name": "@electron-forge/maker-squirrel",
           "config": {
-            "name": "my_new_app"
+            "name": "timele"
           }
         },
         {
@@ -49,6 +49,7 @@
             "mainConfig": "./webpack.main.config.js",
             "renderer": {
               "config": "./webpack.renderer.config.js",
+              "nodeIntegration": true,
               "entryPoints": [
                 {
                   "html": "./src/render/index.html",
@@ -69,6 +70,7 @@
     "@electron-forge/maker-squirrel": "^6.0.0-beta.59",
     "@electron-forge/maker-zip": "^6.0.0-beta.59",
     "@electron-forge/plugin-webpack": "6.0.0-beta.59",
+    "@types/lodash-es": "^4.17.4",
     "@typescript-eslint/eslint-plugin": "^4.0.1",
     "@typescript-eslint/parser": "^4.0.1",
     "@vercel/webpack-asset-relocator-loader": "1.6.0",
@@ -85,6 +87,9 @@
   },
   "dependencies": {
     "active-win": "^7.6.0",
-    "electron-squirrel-startup": "^1.0.0"
+    "dayjs": "^1.10.6",
+    "electron-squirrel-startup": "^1.0.0",
+    "lodash-es": "^4.17.21",
+    "lowdb": "^2.1.0"
   }
 }
