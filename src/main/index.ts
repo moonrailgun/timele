@@ -1,5 +1,7 @@
-import { app, BrowserWindow } from 'electron';
+import { app, BrowserWindow, Menu, Tray } from 'electron';
 import { init } from './active-win';
+import { menubar } from 'menubar';
+import path from 'path';
 
 init();
 
@@ -35,7 +37,7 @@ const createWindow = (): void => {
 // This method will be called when Electron has finished
 // initialization and is ready to create browser windows.
 // Some APIs can only be used after this event occurs.
-app.on('ready', createWindow);
+// app.on('ready', createWindow);
 
 // Quit when all windows are closed, except on macOS. There, it's common
 // for applications and their menu bar to stay active until the user quits
@@ -56,3 +58,26 @@ app.on('activate', () => {
 
 // In this file you can include the rest of your app's specific main process
 // code. You can also put them in separate files and import them here.
+
+app.whenReady().then(() => {
+  const tray = new Tray(path.resolve(__dirname, '../../resource/icon.png'));
+  // tray.setContextMenu(Menu.)
+  const mb = menubar({
+    tray,
+    browserWindow: {
+      height: 640,
+      width: 480,
+      webPreferences: {
+        nodeIntegration: true,
+        contextIsolation: false,
+      },
+    },
+    showDockIcon: false,
+    showOnAllWorkspaces: false,
+    index: MAIN_WINDOW_WEBPACK_ENTRY,
+  });
+
+  mb.on('ready', () => {
+    console.log('Menubar app is ready.');
+  });
+});
