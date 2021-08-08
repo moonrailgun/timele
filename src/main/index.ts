@@ -59,14 +59,14 @@ app.on('activate', () => {
 // In this file you can include the rest of your app's specific main process
 // code. You can also put them in separate files and import them here.
 
+const iconPath = path.resolve(__dirname, '../../resource/icon.png');
+
 app.whenReady().then(() => {
-  const tray = new Tray(path.resolve(__dirname, '../../resource/icon.png'));
+  const tray = new Tray(iconPath);
   tray.setContextMenu(
     Menu.buildFromTemplate([
       {
-        role: 'about',
-      },
-      {
+        label: '退出',
         role: 'quit',
       },
     ])

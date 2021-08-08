@@ -89,7 +89,6 @@
     "typescript": "^4.0.2"
   },
   "dependencies": {
-    "about-window": "^1.14.0",
     "active-win": "^7.6.0",
     "dayjs": "^1.10.6",
     "electron-squirrel-startup": "^1.0.0",
