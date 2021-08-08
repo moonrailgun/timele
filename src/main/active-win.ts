@@ -4,29 +4,17 @@ import { Low, JSONFile } from 'lowdb';
 import path from 'path';
 import { get, set } from 'lodash-es';
 import dayjs from 'dayjs';
+import type { DbData } from '../shared/types';
 
-interface Data {
-  stats: Record<
-    string, // 日期
-    Record<
-      string, // 应用名
-      Record<
-        string, // 应用标题
-        number
-      >
-    >
-  >;
-}
-
-const defaultData: Data = {
+const defaultData: DbData = {
   stats: {},
 };
 
 const dbpath = path.join(app.getPath('userData'), 'usage-db.json');
-console.log('dbpath', dbpath);
+console.log('数据库地址:', dbpath);
 
-const adapter = new JSONFile<Data>(dbpath);
-const db = new Low<Data>(adapter);
+const adapter = new JSONFile<DbData>(dbpath);
+const db = new Low<DbData>(adapter);
 
 type WindowMeta = activeWindow.Result;
 
@@ -76,4 +64,8 @@ async function recordActiveWindowUsage(
 
 ipcMain.on('getDB', (event) => {
   event.returnValue = db.data;
+});
+
+ipcMain.on('requestStats', (event) => {
+  event.reply('updateStats', db.data.stats);
 });

@@ -28,10 +28,9 @@
 
 import './index.css';
 import { ipcRenderer } from 'electron';
-
-console.log(
-  '👋 This message is being logged by "renderer.js", included via webpack'
-);
+import dayjs from 'dayjs';
+import type { DbData } from '../shared/types';
+import _ from 'lodash';
 
 (window as any).DEBUG = {
   showDB() {
@@ -39,3 +38,19 @@ console.log(
     console.log(db);
   },
 };
+
+setInterval(() => {
+  ipcRenderer.send('requestStats');
+}, 1000);
+
+ipcRenderer.on('updateStats', (event, data: DbData['stats']) => {
+  const todayStats = data[dayjs().format('YYYY-MM-DD')];
+  const statsSum = _.mapValues(todayStats, (detail) => _.sum(_.values(detail))); // Object.entries(todayStats); //.map(([process, detail]) => )
+
+  document.querySelector('#stats').innerHTML = `
+  <div>
+    <div>今日统计信息</div>
+    <div>${JSON.stringify(statsSum, null, 2)}</div>
+  </div>
+  `;
+});

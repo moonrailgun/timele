@@ -61,7 +61,16 @@ app.on('activate', () => {
 
 app.whenReady().then(() => {
   const tray = new Tray(path.resolve(__dirname, '../../resource/icon.png'));
-  // tray.setContextMenu(Menu.)
+  tray.setContextMenu(
+    Menu.buildFromTemplate([
+      {
+        role: 'about',
+      },
+      {
+        role: 'quit',
+      },
+    ])
+  );
   const mb = menubar({
     tray,
     browserWindow: {
