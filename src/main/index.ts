@@ -74,7 +74,7 @@ app.whenReady().then(() => {
   const mb = menubar({
     tray,
     browserWindow: {
-      height: 640,
+      height: 320,
       width: 480,
       webPreferences: {
         nodeIntegration: true,
