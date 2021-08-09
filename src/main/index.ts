@@ -1,4 +1,4 @@
-import { app, BrowserWindow, Menu, Tray } from 'electron';
+import { app, BrowserWindow, Menu, Tray, nativeImage } from 'electron';
 import { init } from './active-win';
 import { menubar } from 'menubar';
 import path from 'path';
@@ -62,7 +62,8 @@ app.on('activate', () => {
 const iconPath = path.resolve(__dirname, '../../resource/icon.png');
 
 app.whenReady().then(() => {
-  const tray = new Tray(iconPath);
+  const icon = nativeImage.createFromPath(iconPath);
+  const tray = new Tray(icon.resize({ width: 16, height: 16 }));
   tray.setContextMenu(
     Menu.buildFromTemplate([
       {
