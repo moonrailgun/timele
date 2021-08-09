@@ -64,14 +64,12 @@ const iconPath = path.resolve(__dirname, '../../resource/icon.png');
 app.whenReady().then(() => {
   const icon = nativeImage.createFromPath(iconPath);
   const tray = new Tray(icon.resize({ width: 16, height: 16 }));
-  tray.setContextMenu(
-    Menu.buildFromTemplate([
-      {
-        label: '退出',
-        role: 'quit',
-      },
-    ])
-  );
+  const contextMenu = Menu.buildFromTemplate([
+    {
+      label: '退出',
+      role: 'quit',
+    },
+  ]);
   const mb = menubar({
     tray,
     browserWindow: {
@@ -89,5 +87,9 @@ app.whenReady().then(() => {
 
   mb.on('ready', () => {
     console.log('Menubar app is ready.');
+
+    tray.on('right-click', () => {
+      mb.tray.popUpContextMenu(contextMenu);
+    });
   });
 });
