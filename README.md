@@ -2,6 +2,11 @@
 
 时间都去哪儿了？
 
+## 类似的产品
+
+- [rescuetime](https://www.rescuetime.com/)
+- mac系统自带的屏幕使用时间
+
 ## 编译问题
 
 - 如果出现
