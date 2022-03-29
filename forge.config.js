@@ -7,9 +7,6 @@ const path = require('path')
 // Reference: https://www.electronforge.io/configuration
 module.exports = {
   packagerConfig: {
-    extraResource: [
-      path.resolve(__dirname, './resource'),
-    ],
     appBundleId: fromBuildIdentifier({
       beta: 'com.moonrailgun.timele',
       prod: 'com.moonrailgun.beta.timele',

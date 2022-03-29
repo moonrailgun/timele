@@ -9,7 +9,8 @@
     "package": "electron-forge package",
     "make": "electron-forge make",
     "publish": "electron-forge publish",
-    "lint": "eslint --ext .ts,.tsx ."
+    "lint": "eslint --ext .ts,.tsx .",
+    "postinstall": "node ./hackIconv.js"
   },
   "keywords": [],
   "author": {
@@ -31,6 +32,7 @@
     "@typescript-eslint/eslint-plugin": "^4.0.1",
     "@typescript-eslint/parser": "^4.0.1",
     "@vercel/webpack-asset-relocator-loader": "1.6.0",
+    "copy-webpack-plugin": "^10.2.4",
     "css-loader": "^6.0.0",
     "electron": "13.1.8",
     "eslint": "^7.6.0",
