@@ -1,6 +1,6 @@
 // import activeWindows, { WindowMeta } from 'electron-active-window';
 import activeWindow from 'active-win';
-import { ipcMain, app } from 'electron';
+import { ipcMain, app, dialog } from 'electron';
 import { Low, JSONFile } from 'lowdb';
 import path from 'path';
 import { get, set } from 'lodash-es';
@@ -34,6 +34,7 @@ export async function init(frequency = 1000): Promise<void> {
       })
       .catch((error) => {
         console.error('获取当前窗口信息失败', error);
+        dialog.showErrorBox('内部错误', '获取当前窗口信息失败');
       });
   };
   loop();
