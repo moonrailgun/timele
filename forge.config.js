@@ -11,7 +11,7 @@ module.exports = {
       beta: 'com.moonrailgun.timele',
       prod: 'com.moonrailgun.beta.timele',
     }),
-    // icon: path.resolve(__dirname, './build/icon'),
+    icon: path.resolve(__dirname, './resource/icon'),
   },
   makers: [
     {

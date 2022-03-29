@@ -34,7 +34,10 @@ export async function init(frequency = 1000): Promise<void> {
       })
       .catch((error) => {
         console.error('获取当前窗口信息失败', error);
-        dialog.showErrorBox('内部错误', '获取当前窗口信息失败');
+        dialog.showErrorBox(
+          '内部错误',
+          '获取当前窗口信息失败, 可能是因为没有足够的权限'
+        );
       });
   };
   loop();
@@ -75,5 +78,6 @@ ipcMain.on('getDB', (event) => {
 });
 
 ipcMain.on('requestStats', (event) => {
+  // TODO: 返回时需要检查是否有足够的权限
   event.reply('updateStats', db.data.stats);
 });
