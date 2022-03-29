@@ -1,3 +1,4 @@
+// import activeWindows, { WindowMeta } from 'electron-active-window';
 import activeWindow from 'active-win';
 import { ipcMain, app } from 'electron';
 import { Low, JSONFile } from 'lowdb';
@@ -5,6 +6,8 @@ import path from 'path';
 import { get, set } from 'lodash-es';
 import dayjs from 'dayjs';
 import type { DbData } from '../shared/types';
+
+type WindowMeta = activeWindow.Result;
 
 const defaultData: DbData = {
   stats: {},
@@ -16,25 +19,28 @@ console.log('数据库地址:', dbpath);
 const adapter = new JSONFile<DbData>(dbpath);
 const db = new Low<DbData>(adapter);
 
-type WindowMeta = activeWindow.Result;
-
 export async function init(frequency = 1000): Promise<void> {
   await db.read();
   db.data ||= defaultData;
 
   const loop = () => {
-    getActiveWindowMeta().then((meta) => {
-      recordActiveWindowUsage(meta, frequency);
+    getActiveWindowMeta()
+      .then((meta) => {
+        recordActiveWindowUsage(meta, frequency);
 
-      setTimeout(() => {
-        loop();
-      }, frequency);
-    });
+        setTimeout(() => {
+          loop();
+        }, frequency);
+      })
+      .catch((error) => {
+        console.error('获取当前窗口信息失败', error);
+      });
   };
   loop();
 }
 
 async function getActiveWindowMeta(): Promise<WindowMeta> {
+  // const meta = await activeWindows().getActiveWindow();
   const meta = await activeWindow();
 
   return meta;
@@ -55,6 +61,7 @@ async function recordActiveWindowUsage(
 
   const date = dayjs().format('YYYY-MM-DD');
 
+  // const p = [date, meta.windowClass, meta.windowName];
   const p = [date, meta.owner.name, meta.title];
   const usageTime = Number(get(db.data.stats, p)) || 0;
   set(db.data.stats, p, usageTime + inc);
